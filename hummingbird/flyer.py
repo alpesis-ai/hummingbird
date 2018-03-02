@@ -1,5 +1,5 @@
-import argparse
 import time
+import argparse
 from enum import Enum
 
 import numpy as np
@@ -8,13 +8,7 @@ from udacidrone import Drone
 from udacidrone.connection import MavlinkConnection, WebSocketConnection  # noqa: F401
 from udacidrone.messaging import MsgID
 
-
-# Waypoints: updating the waypoints, then the drone could fly through a guided specific path.
-# Configuring the waypoints here:
-CONFIG_WAYPOINTS = [[10.0,  0.0, 3.0],
-     	            [10.0, 10.0, 3.0],
-	            [ 0.0, 10.0, 3.0],
-	            [ 0.0,  0.0, 3.0]]
+from settings import WAYPOINTS
 
 
 class States(Enum):
@@ -61,7 +55,7 @@ class BackyardFlyer(Drone):
             # coodinate conversion (positive <- negative): altitude = -1.0 * local_altitude
             # if local_altitude > (0.95 * target_altitude)
             if (-1.0 * self.local_position[2] > 0.95 * self.target_position[2]):
-                self.all_waypoints = self.calculate_box()
+                self.all_waypoints = self.get_waypoints()
                 self.waypoint_transition()
         elif self.flight_state == States.WAYPOINT:
             # if the local_position is getting close to target_position (< 1.0)
@@ -103,12 +97,12 @@ class BackyardFlyer(Drone):
             elif self.flight_state == States.DISARMING: self.manual_transition()
 
 
-    def calculate_box(self):
+    def get_waypoints(self):
         """
         Return waypoints to fly a box
         """
         print("Setting Home")
-        return CONFIG_WAYPOINTS
+        return WAYPOINTS
 
 
     def arming_transition(self):

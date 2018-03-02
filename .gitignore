@@ -6,3 +6,9 @@
 
 # python
 *.pyc
+
+# Logs
+Logs
+
+# cache
+__pycache__
