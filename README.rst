@@ -13,15 +13,27 @@ Prequisites:
 
 - Simulator: https://github.com/udacity/FCND-Simulator-Releases
 - Python: 3.6.3
+- MiniConda
 
+MiniConda
+
+::
+
+    # download miniconda at https://conda.io/miniconda.html
+    $ bash ./Miniconda3-latest-MacOSX-x86_64.sh
+    $ export PATH=/Users/<username>/miniconda3/bin:$PATH
+
+Hummingbird
 
 ::
 
     $ git clone https://github.com/alpesis-ai/hummingbird.git
     $ cd hummingbird
 
-    $ mkvirtualenv hummingbird
-    $ pip install -r requirements.txt
+    $ /Users/<username>/miniconda3/bin/conda env create -f environment.yml
+    $ source activate hummingbird
+    # source deactivate 
 
     $ cd hummingbird
+    # open the simulator, and then run flyer.py
     $ python flyer.py
