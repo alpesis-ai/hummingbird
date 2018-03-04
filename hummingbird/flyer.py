@@ -7,7 +7,7 @@ import numpy as np
 from udacidrone import Drone
 from udacidrone.connection import MavlinkConnection, WebSocketConnection  # noqa: F401
 from udacidrone.messaging import MsgID
-from udacidrone.frame_utils import local_to_global
+# from udacidrone.frame_utils import local_to_global
 
 
 class States(Enum):
