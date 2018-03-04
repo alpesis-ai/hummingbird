@@ -7,8 +7,7 @@ import numpy as np
 from udacidrone import Drone
 from udacidrone.connection import MavlinkConnection, WebSocketConnection  # noqa: F401
 from udacidrone.messaging import MsgID
-
-from settings import WAYPOINTS
+from udacidrone.frame_utils import local_to_global
 
 
 class States(Enum):
@@ -55,7 +54,7 @@ class BackyardFlyer(Drone):
             # coodinate conversion (positive <- negative): altitude = -1.0 * local_altitude
             # if local_altitude > (0.95 * target_altitude)
             if (-1.0 * self.local_position[2] > 0.95 * self.target_position[2]):
-                self.all_waypoints = self.get_waypoints()
+                self.create_mission()
                 self.waypoint_transition()
         elif self.flight_state == States.WAYPOINT:
             # if the local_position is getting close to target_position (< 1.0)
@@ -97,12 +96,12 @@ class BackyardFlyer(Drone):
             elif self.flight_state == States.DISARMING: self.manual_transition()
 
 
-    def get_waypoints(self):
-        """
-        Return waypoints to fly a box
-        """
-        print("Setting Home")
-        return WAYPOINTS
+    def create_mission(self):
+        waypoints = np.loadtxt('waypoints.csv',delimiter=',',dtype='Float64').tolist()
+        for x in waypoints:
+            # self.all_waypoints.append(local_to_global(x, self.global_home))
+            self.all_waypoints.append(x)
+        return
 
 
     def arming_transition(self):
