@@ -9,6 +9,8 @@ from udacidrone.connection import MavlinkConnection, WebSocketConnection  # noqa
 from udacidrone.messaging import MsgID
 # from udacidrone.frame_utils import local_to_global
 
+import settings
+
 
 class States(Enum):
     MANUAL = 0
@@ -97,7 +99,7 @@ class BackyardFlyer(Drone):
 
 
     def create_mission(self):
-        waypoints = np.loadtxt('waypoints.csv',delimiter=',',dtype='Float64').tolist()
+        waypoints = np.loadtxt(settings.WAYPOINTS, delimiter=',', dtype='Float64').tolist()
         for x in waypoints:
             # self.all_waypoints.append(local_to_global(x, self.global_home))
             self.all_waypoints.append(x)
